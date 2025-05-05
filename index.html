@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İlişki Süremiz</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="/icon.png">
+
+</head>
+<body>
+
+    <div class="container">
+        <h1>İlişki Süremiz</h1>
+        <p>Kaç gündür birlikteyiz?</p>
+        <p class="days-count" id="daysCount">0</p>
+    </div>
+
+    <script>
+        const startDate = new Date('2024-10-03T00:00:00Z'); // ISO fix for Safari
+    
+        function calculateDays() {
+            const today = new Date();
+            const timeDifference = today - startDate;
+            const days = Math.floor(timeDifference / (1000 * 3600 * 24));
+            return days;
+        }
+    
+        document.getElementById("daysCount").innerText = calculateDays();
+    </script>
+    
+</body>
+</html>
