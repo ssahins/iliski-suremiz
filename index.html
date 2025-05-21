@@ -12,9 +12,18 @@
 
     <div class="container">
         <h1>İlişki Süremiz</h1>
-        <p>Kalplerimizin birlikte attığı zaman dilimi</p>
+        
+        <p>Kalplerimizin birlikte attığı zaman dilimi ⏳</p>
+        <p id="currentDate"></p>
         <p class="days-count" id="daysCount">0</p>
+        <p class="anniversary-count" id="anniversaryCount"></p>
+
     </div>
+
+    <audio id="bgMusic" autoplay loop>
+        <source src="mu" type="audio/mpeg">
+        Tarayıcınız ses öğesini desteklemiyor.
+    </audio>
 
     <script>
         const startDate = new Date('2024-10-03T00:00:00Z'); // ISO fix for Safari
@@ -25,9 +34,63 @@
             const days = Math.floor(timeDifference / (1000 * 3600 * 24));
             return days;
         }
+        function formatDate(date) {
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            return date.toLocaleDateString('tr-TR', options);
+        }
     
-        document.getElementById("daysCount").innerText = calculateDays();
+        document.getElementById("currentDate").innerText = "Bugünün tarihi: " + formatDate(new Date());
+        document.getElementById("daysCount").innerText = "İlişki süremiz: " + calculateDays() + " gün";
     </script>
+
+<script>
+    // Kalp animasyonlarını oluştur
+    const heartContainer = document.createElement('div');
+    document.body.appendChild(heartContainer);
+
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerText = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (Math.random() * 10 + 15) + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 6000);
+    }
+
+    setInterval(createHeart, 800);
+</script>
+
+<script>
+    const startDate = new Date('2024-10-03T00:00:00');
+    const anniversaryDate = new Date('2025-10-03T00:00:00');
+
+    function calculateDays() {
+        const today = new Date();
+        const timeDifference = today - startDate;
+        return Math.floor(timeDifference / (1000 * 3600 * 24));
+    }
+
+    function calculateAnniversaryCountdown() {
+        const today = new Date();
+        const diff = anniversaryDate - today;
+        const daysLeft = Math.ceil(diff / (1000 * 3600 * 24));
+        return daysLeft;
+    }
+
+    function formatDate(date) {
+        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        return date.toLocaleDateString('tr-TR', options);
+    }
+
+    document.getElementById("currentDate").innerText = "Bugünün tarihi: " + formatDate(new Date());
+    document.getElementById("daysCount").innerText = "İlişki süremiz: " + calculateDays() + " gün";
+    document.getElementById("anniversaryCount").innerText = "1. yıl dönümümüze kalan gün: " + calculateAnniversaryCountdown() + " gün 🎉";
+</script>
+
     
 </body>
 </html>
