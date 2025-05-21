@@ -1,96 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>İlişki Süremiz</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="/icon.png">
-
 </head>
 <body>
 
     <div class="container">
-        <h1>İlişki Süremiz</h1>
-        
-        <p>Kalplerimizin birlikte attığı zaman dilimi ⏳</p>
-        <p id="currentDate"></p>
+        <h1>İlişki Süremiz 💖</h1>
+        <p class="date-display" id="currentDate"></p>
         <p class="days-count" id="daysCount">0</p>
         <p class="anniversary-count" id="anniversaryCount"></p>
-
     </div>
 
-    <audio id="bgMusic" autoplay loop>
-        <source src="mu" type="audio/mpeg">
-        Tarayıcınız ses öğesini desteklemiyor.
-    </audio>
-
-    <script>
-        const startDate = new Date('2024-10-03T00:00:00Z'); // ISO fix for Safari
+   <!-- Arka plan müzik -->
+<audio id="bgMusic" loop>
+    <source src="./music.mp3" type="audio/mpeg" />
+    Tarayıcınız ses öğesini desteklemiyor.
     
+</audio>
+
+<button id="playBtn">Müziği Başlat</button>
+<button id="pauseBtn" style="display:none;">Müziği Durdur</button>
+
+
+    <!-- Kalp animasyonu -->
+    <script>
+        // Kalp oluşturma
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.innerText = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.fontSize = (Math.random() * 10 + 15) + "px";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 6000);
+        }
+
+        setInterval(createHeart, 800);
+    </script>
+
+    <!-- Tarih hesaplamaları -->
+    <script>
+        const startDate = new Date('2024-10-03T00:00:00');
+        const anniversaryDate = new Date('2025-10-03T00:00:00');
+
         function calculateDays() {
             const today = new Date();
             const timeDifference = today - startDate;
-            const days = Math.floor(timeDifference / (1000 * 3600 * 24));
-            return days;
+            return Math.floor(timeDifference / (1000 * 3600 * 24));
         }
+
+        function calculateAnniversaryCountdown() {
+            const today = new Date();
+            const diff = anniversaryDate - today;
+            const daysLeft = Math.ceil(diff / (1000 * 3600 * 24));
+            return daysLeft;
+        }
+
         function formatDate(date) {
             const options = { day: 'numeric', month: 'long', year: 'numeric' };
             return date.toLocaleDateString('tr-TR', options);
         }
-    
+
         document.getElementById("currentDate").innerText = "Bugünün tarihi: " + formatDate(new Date());
         document.getElementById("daysCount").innerText = "İlişki süremiz: " + calculateDays() + " gün";
+        document.getElementById("anniversaryCount").innerText = "1. yıl dönümümüze kalan gün: " + calculateAnniversaryCountdown() + " gün 🎉";
     </script>
 
-<script>
-    // Kalp animasyonlarını oluştur
-    const heartContainer = document.createElement('div');
-    document.body.appendChild(heartContainer);
+ <script>
+        const bgMusic = document.getElementById('bgMusic');
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
 
-    function createHeart() {
-        const heart = document.createElement("div");
-        heart.classList.add("heart");
-        heart.innerText = "❤️";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.fontSize = (Math.random() * 10 + 15) + "px";
-        document.body.appendChild(heart);
+       playBtn.addEventListener('click', () => {
+    bgMusic.currentTime =40;  // 30. saniyeden başla
+    bgMusic.play().then(() => {
+        playBtn.style.display = 'none';
+        pauseBtn.style.display = 'inline-block';
+    }).catch(error => {
+        console.error("Müzik çalınamadı", error);
+    });
+});
 
-        setTimeout(() => {
-            heart.remove();
-        }, 6000);
-    }
-
-    setInterval(createHeart, 800);
+        pauseBtn.addEventListener('click', () => {
+            bgMusic.pause();
+            pauseBtn.style.display = 'none';
+            playBtn.style.display = 'inline-block';
+        });
+    </script>
 </script>
-
-<script>
-    const startDate = new Date('2024-10-03T00:00:00');
-    const anniversaryDate = new Date('2025-10-03T00:00:00');
-
-    function calculateDays() {
-        const today = new Date();
-        const timeDifference = today - startDate;
-        return Math.floor(timeDifference / (1000 * 3600 * 24));
-    }
-
-    function calculateAnniversaryCountdown() {
-        const today = new Date();
-        const diff = anniversaryDate - today;
-        const daysLeft = Math.ceil(diff / (1000 * 3600 * 24));
-        return daysLeft;
-    }
-
-    function formatDate(date) {
-        const options = { day: 'numeric', month: 'long', year: 'numeric' };
-        return date.toLocaleDateString('tr-TR', options);
-    }
-
-    document.getElementById("currentDate").innerText = "Bugünün tarihi: " + formatDate(new Date());
-    document.getElementById("daysCount").innerText = "İlişki süremiz: " + calculateDays() + " gün";
-    document.getElementById("anniversaryCount").innerText = "1. yıl dönümümüze kalan gün: " + calculateAnniversaryCountdown() + " gün 🎉";
-</script>
-
-    
 </body>
 </html>
