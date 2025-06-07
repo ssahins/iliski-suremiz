@@ -78,7 +78,7 @@
         const pauseBtn = document.getElementById('pauseBtn');
 
        playBtn.addEventListener('click', () => {
-    bgMusic.currentTime =2;  // 2. saniyeden başla
+    bgMusic.currentTime =0;  // 0. saniyeden başla
     bgMusic.play().then(() => {
         playBtn.style.display = 'none';
         pauseBtn.style.display = 'inline-block';
